@@ -1,0 +1,11 @@
+Visual Studio 2017 on Windows 10:
+0x00000004 c.getInt()
+0x00000004 c.getPtr()
+0x00000004 c.getEnumVal()
+0x009ac00c c.getRef()
+0x008ffa98 c.getIntStruct()
+0x008ffa68 c.getArrStruct()
+0x008ffa38 c.getIntUnion()
+0x008ffa08 c.getArrUnion()
+0x008ff9d8 c.getStructUnion()
+0x008ff9a8 c.getClass()
