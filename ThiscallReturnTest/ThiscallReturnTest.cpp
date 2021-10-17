@@ -6,6 +6,8 @@
 
 using namespace std;
 
+int global = 4;
+
 struct FourByteIntStruct {
 	int d;
 };
@@ -29,6 +31,13 @@ union FourByteStructUnion {
 	FourByteIntStruct s;
 };
 
+enum SimpleEnum {
+	A = 1,
+	B = 2,
+	C = 3,
+	D = 4,
+};
+
 class FourByteClass {
 public:
 	int getInt() {
@@ -36,7 +45,15 @@ public:
 	}
 
 	int *getPtr() {
-		return NULL;
+		return (int *)4;
+	}
+
+	SimpleEnum getEnumVal() {
+		return D;
+	}
+
+	int &getRef() {
+		return global;
 	}
 
 	FourByteIntStruct getIntStruct() {
@@ -80,7 +97,9 @@ int main()
 	FourByteClass c;
 
 	TRY_FUNC(c.getInt());
-	TRY_FUNC(c.getPtr());
+	TRY_FUNC(c.getPtr())
+	TRY_FUNC(c.getEnumVal());;
+	TRY_FUNC(c.getRef());
 	TRY_FUNC(c.getIntStruct());
 	TRY_FUNC(c.getArrStruct());
 	TRY_FUNC(c.getIntUnion());
