@@ -2,19 +2,89 @@
 //
 
 #include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+struct FourByteIntStruct {
+	int d;
+};
+
+struct FourByteArrStruct {
+	char d[4];
+};
+
+union FourByteIntUnion {
+	int d;
+	unsigned int u;
+};
+
+union FourByteArrUnion {
+	int d;
+	char a[4];
+};
+
+union FourByteStructUnion {
+	int d;
+	FourByteIntStruct s;
+};
+
+class FourByteClass {
+public:
+	int getInt() {
+		return 4;
+	}
+
+	int *getPtr() {
+		return NULL;
+	}
+
+	FourByteIntStruct getIntStruct() {
+		return FourByteIntStruct{ 4 };
+	}
+
+	FourByteArrStruct getArrStruct() {
+		return FourByteArrStruct{ {4, 4, 4, 4} };
+	}
+
+	FourByteIntUnion getIntUnion() {
+		return FourByteIntUnion{ 4 };
+	}
+
+	FourByteArrUnion getArrUnion() {
+		return FourByteArrUnion{ 4 };
+	}
+
+	FourByteStructUnion getStructUnion() {
+		return FourByteStructUnion{ 4 };
+	}
+
+	FourByteClass getClass() {
+		return *this;
+	}
+
+private:
+	int s = 4;
+};
+
+#define TRY_FUNC(f) { \
+	unsigned int res = 0; \
+	f; \
+	__asm { mov res, eax } \
+	cout <<"0x" << hex << setw(8) << setfill('0') << res << " " << #f << endl; \
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	unsigned int ret = 0;
+	FourByteClass c;
+
+	TRY_FUNC(c.getInt());
+	TRY_FUNC(c.getPtr());
+	TRY_FUNC(c.getIntStruct());
+	TRY_FUNC(c.getArrStruct());
+	TRY_FUNC(c.getIntUnion());
+	TRY_FUNC(c.getArrUnion());
+	TRY_FUNC(c.getStructUnion());
+	TRY_FUNC(c.getClass());
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
